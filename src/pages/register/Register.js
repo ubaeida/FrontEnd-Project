@@ -1,8 +1,7 @@
 import classes from "./Register.module.css";
-import { Link , useNavigate} from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 const Register = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const register = async (e) => {
     e.preventDefault();
     const response = await fetch(`${process.env.REACT_APP_API_REGISTER}`, {
@@ -10,9 +9,8 @@ const Register = () => {
       body: new FormData(e.target),
     });
     const json = await response.json();
-    console.log('response', json)
     if (json.success) {
-      navigate('/login')
+      navigate("/login");
     } else alert(json.messages);
   };
   return (
