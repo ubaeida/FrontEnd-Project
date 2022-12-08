@@ -1,5 +1,4 @@
-body{ 
-    margin: 0px;
-    font-family: 'Poppins', sans-serif;
-    height: 100vh;
+body { 
+    font-family: 'Poppins', sans-serif !important;
+    font-size: large;
 }
