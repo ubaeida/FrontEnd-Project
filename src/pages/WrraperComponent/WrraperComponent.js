@@ -1,9 +1,7 @@
 import Nav from "../../components/Nav/Nav";
-import Content from "../../components/Content/content";
 import Head from "../../components/Head/Head.";
-import classes from "./Home.module.css";
-const Home = () => {
-  return (
+import classes from "./WrraperComponent.module.css";
+const WrraperComponent = (Component) =>({...props}) => (
     <div className={classes.homePageContainer}>
       <header>
         <Nav />
@@ -11,11 +9,10 @@ const Home = () => {
       <div className={classes.content}>
         <Head />
         <div>
-          <Content />
+          <Component {...props}/>
         </div>
       </div>
     </div>
-  );
-};
+);
 
-export default Home;
+export default WrraperComponent;
