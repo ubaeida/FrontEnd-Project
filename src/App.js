@@ -19,20 +19,18 @@ function App() {
   return (
     <>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Suspense>
-              {" "}
-              <Home />
-            </Suspense>
-          }
-        />
+          <Route
+            path="/"
+            element={
+              <Suspense>
+                <Home />
+              </Suspense>
+            }
+          />
         <Route
           path="/register"
           element={
             <Suspense>
-              {" "}
               <Register />
             </Suspense>
           }
