@@ -38,8 +38,7 @@ const Login = () => {
             <h1 className="mb-4">Login</h1>
             <div className="form-field mb-3">
               <label htmlFor="email" className="mb-2">
-                {" "}
-                Email Address{" "}
+                Email Address
               </label>
               <input
                 ref={emailref}
@@ -51,8 +50,7 @@ const Login = () => {
             </div>
             <div className="form-field mb-3">
               <label htmlFor="password" className="mb-2">
-                {" "}
-                Password{" "}
+                Password
               </label>
               <input
                 ref={passwordref}

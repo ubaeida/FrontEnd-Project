@@ -1,0 +1,24 @@
+.homePageContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+header{ 
+    width: 300px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+@media only screen and (max-width: 992px) {
+  header {
+    width: 200px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  header {
+    display: none;
+  }
+}

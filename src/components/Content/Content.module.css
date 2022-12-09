@@ -1,0 +1,28 @@
+.content{ 
+    width: 600px;
+}
+
+.head { 
+    border: 1px solid #f3f4f5;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 15px;
+}
+.iconsBar{
+    display: none;
+}
+.icons { 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around ;
+}
+.icons div { 
+    margin: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+    .iconsBar{
+        display: block;
+    }    
+}
