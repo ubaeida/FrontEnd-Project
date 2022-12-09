@@ -9,103 +9,63 @@ import LockIcon from "@mui/icons-material/Lock";
 import { NavLink } from "react-router-dom";
 
 const Nav = () => {
+  const links = [
+    {
+      tartget: "/",
+      text: "Home",
+      icon: <HomeIcon />,
+    },
+    {
+      tartget: "/somewhere",
+      text: "Messages",
+      icon: <EmailIcon />,
+    },
+    {
+      tartget: "/somewhere",
+      text: "Bookmarks",
+      icon: <ExploreIcon />,
+    },
+    {
+      tartget: "/somewhere",
+      text: "Explore",
+      icon: <BookmarksIcon />,
+    },
+    {
+      tartget: "/somewhere",
+      text: "Lists",
+      icon: <ViewListIcon />,
+    },
+    {
+      tartget: "/profile",
+      text: "Profile",
+      icon: <PersonIcon />,
+    },
+    {
+      tartget: "/logout",
+      text: "Sign Out",
+      icon: <LockIcon />,
+    },
+  ];
   return (
     <nav>
       <div className={`${classes.image}`}>
         <img src="logo.svg" alt="logo" />
       </div>
       <div className={classes.menu}>
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            isActive
-              ? `${classes.menuItems} ${classes.active}`
-              : `${classes.menuItems}`
-          }
-        >
-          <div>
-            <HomeIcon />
-          </div>
-          <div>Home</div>
-        </NavLink>
-        <NavLink
-          to="/somewhere"
-          className={({ isActive }) =>
-            isActive
-              ? `${classes.menuItems} ${classes.active}`
-              : `${classes.menuItems}`
-          }
-        >
-          <div>
-            <EmailIcon />
-          </div>
-          <div>Messages</div>
-        </NavLink>
-        <NavLink
-          to="/somewhere"
-          className={({ isActive }) =>
-            isActive
-              ? `${classes.menuItems} ${classes.active}`
-              : `${classes.menuItems}`
-          }
-        >
-          <div>
-            <BookmarksIcon />
-          </div>
-          <div>Bookmarks</div>
-        </NavLink>
-        <NavLink
-          to="/somewhere"
-          className={({ isActive }) =>
-            isActive
-              ? `${classes.menuItems} ${classes.active}`
-              : `${classes.menuItems}`
-          }
-        >
-          <div>
-            <ExploreIcon />
-          </div>
-          <div>Explore</div>
-        </NavLink>
-        <NavLink
-          to="/somewhere"
-          className={({ isActive }) =>
-            isActive
-              ? `${classes.menuItems} ${classes.active}`
-              : `${classes.menuItems}`
-          }
-        >
-          <div>
-            <ViewListIcon />
-          </div>
-          <div>Lists</div>
-        </NavLink>
-        <NavLink
-          to="/profile"
-          className={({ isActive }) =>
-            isActive
-              ? `${classes.menuItems} ${classes.active}`
-              : `${classes.menuItems}`
-          }
-        >
-          <div>
-            <PersonIcon />
-          </div>
-          <div>Profile</div>
-        </NavLink>
-        <NavLink
-          to="/logout"
-          className={({ isActive }) =>
-            isActive
-              ? `${classes.menuItems} ${classes.active}`
-              : `${classes.menuItems}`
-          }
-        >
-          <div>
-            <LockIcon />
-          </div>
-          <div>Sing Out</div>
-        </NavLink>
+        {links.map((link, i) => (
+          <NavLink
+            key={i}
+            to={link.tartget}
+            className={({ isActive }) =>
+              isActive
+                ? `${classes.menuItems} ${classes.active}`
+                : `${classes.menuItems}`
+            }
+          >
+            <div>{link.icon}</div>
+            <div>{link.text}</div>
+          </NavLink>
+        ))}
       </div>
     </nav>
   );

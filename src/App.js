@@ -6,6 +6,7 @@ import "./App.css";
 const Register = React.lazy(() => import("./pages/Register/Register"));
 const Login = React.lazy(() => import("./pages/Login/Login"));
 const Home = React.lazy(() => import("./pages/Home/Home"));
+const Logout = React.lazy(() => import("./pages/Logout/Logout"));
 
 function App() {
   const { token } = useContext(AuthContext);
@@ -41,6 +42,14 @@ function App() {
           element={
             <Suspense>
               <Login />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/logout"
+          element={
+            <Suspense>
+              <Logout />
             </Suspense>
           }
         />

@@ -12,8 +12,13 @@ const UserMagnger = ({children}) => {
     localStorage.setItem("the_token", userToken);
     localStorage.setItem("the_user", JSON.stringify(userData));
   };
+  const logout = () => { 
+    localStorage.removeItem("the_token");
+    localStorage.removeItem("the_user");
+
+  }
   return (
-    <AuthContext.Provider value={{user, token, login }}>
+    <AuthContext.Provider value={{user, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

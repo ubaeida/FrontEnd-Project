@@ -9,9 +9,8 @@ const Register = () => {
       body: new FormData(e.target),
     });
     const json = await response.json();
-    if (json.success) {
-      navigate("/login");
-    } else alert(json.messages);
+    if (json.success) navigate("/login");
+    else alert(json.messages);
   };
   return (
     <div className="container">
