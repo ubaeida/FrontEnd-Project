@@ -1,9 +1,16 @@
 .head { 
-    border: 1px solid #f3f4f5;
+    border-bottom: 1px solid #f3f4f5;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 10px 15px;
+    
+}
+.headTitle{
+    display: flex;
+}
+.headTitle h3{
+    align-self: center;
 }
 .iconsBar{
     display: none;
@@ -15,6 +22,13 @@
 }
 .icons div { 
     margin: 5px;
+    background-color:#f3f4f5;
+    border-radius: 35px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media only screen and (max-width: 768px) {

@@ -12,6 +12,7 @@ header{
 }
 .content{ 
   width: 600px;
+  border: 1px solid #f3f4f5;
 }
 
 @media only screen and (max-width: 992px) {

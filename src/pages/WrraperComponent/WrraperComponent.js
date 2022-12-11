@@ -1,18 +1,24 @@
 import Nav from "../../components/Nav/Nav";
 import Head from "../../components/Head/Head.";
 import classes from "./WrraperComponent.module.css";
-const WrraperComponent = (Component) =>({...props}) => (
+import { useState, useContext } from "react";
+import {AuthContext} from '../../contexts/AuthContext'
+const WrraperComponent = (Component) => {
+  const [activeComponent, setActiveCompontet]  = useState(null)
+  const {user, token} = useContext(AuthContext)
+  return () => (
     <div className={classes.homePageContainer}>
       <header>
-        <Nav />
+        <Nav setActiveCompontet={setActiveCompontet} />
       </header>
       <div className={classes.content}>
-        <Head />
+        <Head activeComponent={activeComponent}  />
         <div>
-          <Component {...props}/>
+          <Component user={user} token={token} />
         </div>
       </div>
     </div>
-);
+  );
+}
 
 export default WrraperComponent;

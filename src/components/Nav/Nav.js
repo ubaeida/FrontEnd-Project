@@ -8,12 +8,13 @@ import PersonIcon from "@mui/icons-material/Person";
 import LockIcon from "@mui/icons-material/Lock";
 import { NavLink } from "react-router-dom";
 
-const Nav = () => {
+const Nav = ({ setActiveCompontet }) => {
   const links = [
     {
       tartget: "/",
       text: "Home",
       icon: <HomeIcon />,
+      active:false
     },
     {
       tartget: "/somewhere",
@@ -56,16 +57,15 @@ const Nav = () => {
           <NavLink
             key={i}
             to={link.tartget}
+            
             className={({ isActive }) =>
-              isActive
-                ? `${classes.menuItems} ${classes.active}`
-                : `${classes.menuItems}`
-            }
-          >
+              isActive  ? ` ${ setActiveCompontet(link.text) } ${classes.menuItems} ${classes.active} ` : `${classes.menuItems}`}
+            >
             <div>{link.icon}</div>
             <div>{link.text}</div>
           </NavLink>
-        ))}
+        ))
+        }
       </div>
     </nav>
   );
