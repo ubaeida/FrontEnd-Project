@@ -2,7 +2,13 @@ import classes from "./Profile.module.css";
 import { useEffect, useState } from "react";
 import Posts from "./Posts";
 const Profile = ({ token }) => {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({
+    id: "",
+    name: "",
+    email: "",
+    avatar:"", 
+    posts:[]
+  });
   const getUser = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_USER_UPDATE}`, {
       headers: { authorization: `Bearer ${token}` },
@@ -13,11 +19,11 @@ const Profile = ({ token }) => {
 
   useEffect(() => {
     getUser();
-    console.log(user.posts);
   }, []);
 
-  const updateUser = async (e) => {
+  const hadnleOnSubmit = async (e) => {
     e.preventDefault();
+    const formdata = new FormData(e.target)
     const response = await fetch(`${process.env.REACT_APP_API_USER_UPDATE}`, {
       method: "POST",
       body: new FormData(e.target),
@@ -29,13 +35,19 @@ const Profile = ({ token }) => {
     const json = await response.json();
     if (json.success) {
       alert(json.messages);
-      getUser();
+      for (const item of formdata.entries()){ 
+        if (item[0] == 'avatar'){ 
+          console.log(item[1])
+        }
+      }
+      console.log(user)
     } else alert(json.messages);
   };
-
+  useEffect(() =>{
+  } ,[user])
   return (
     <>
-      <form onSubmit={updateUser} method="POST">
+      <form onSubmit={hadnleOnSubmit} method="POST">
         <div className="p-3">
           <div className="alert alert-info">My Information</div>
           <div className={`form-field mb-3 person-avatar }`}>
@@ -80,7 +92,7 @@ const Profile = ({ token }) => {
               type="text"
               id="name"
               className="form-control"
-              value={user.name}
+              value={user?.name}
               onChange={(e) => {
                 setUser({ ...user, name: e.target.value });
               }}
@@ -98,7 +110,7 @@ const Profile = ({ token }) => {
               type="email"
               id="email"
               className="form-control"
-              value={user.email}
+              value={user?.email}
               onChange={(e) => {
                 setUser({ ...user, email: e.target.value });
               }}
@@ -150,11 +162,7 @@ const Profile = ({ token }) => {
       <div className="mb-4 p-3">
         <div className="alert alert-info">My Posts</div>
         <ul className="list-group">
-          {() => {
-            Object.keys(user.posts).map((post) => {
-              <div>{post.content}</div>;
-            });
-          }}
+              <Posts userPosts={user.posts}/>
         </ul>
       </div>
     </>
