@@ -11,37 +11,37 @@ import { NavLink } from "react-router-dom";
 const Nav = ({ setActiveCompontet }) => {
   const links = [
     {
-      tartget: "/",
+      target: "/",
       text: "Home",
       icon: <HomeIcon />,
     },
     {
-      tartget: "/somewhere",
+      target: "/somewhere",
       text: "Messages",
       icon: <EmailIcon />,
     },
     {
-      tartget: "/somewhere",
+      target: "/somewhere",
       text: "Bookmarks",
       icon: <ExploreIcon />,
     },
     {
-      tartget: "/somewhere",
+      target: "/somewhere",
       text: "Explore",
       icon: <BookmarksIcon />,
     },
     {
-      tartget: "/somewhere",
+      target: "/somewhere",
       text: "Lists",
       icon: <ViewListIcon />,
     },
     {
-      tartget: "/profile",
+      target: "/profile",
       text: "Profile",
       icon: <PersonIcon />,
     },
     {
-      tartget: "/logout",
+      target: "/logout",
       text: "Sign Out",
       icon: <LockIcon />,
     },
@@ -55,12 +55,10 @@ const Nav = ({ setActiveCompontet }) => {
         {links.map((link, i) => (
           <NavLink
             key={i}
-            to={link.tartget}
-            className={({ isActive }) =>
-              isActive ? `${setActiveCompontet(link.text)} ${classes.menuItems} ${classes.active} `
+            to={link.target}
+            className={({ isActive }) => isActive ? `${setActiveCompontet(link.text)} ${classes.menuItems} ${classes.active}`
                 : `${classes.menuItems}`
-            }
-          >
+            }>
             <div>{link.icon}</div>
             <div>{link.text}</div>
           </NavLink>

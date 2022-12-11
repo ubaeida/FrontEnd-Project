@@ -6,8 +6,8 @@ const Profile = ({ token }) => {
     id: "",
     name: "",
     email: "",
-    avatar:"", 
-    posts:[]
+    avatar: "",
+    posts: [],
   });
   const getUser = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_USER_UPDATE}`, {
@@ -19,11 +19,11 @@ const Profile = ({ token }) => {
 
   useEffect(() => {
     getUser();
+    // eslint-disable-next-line
   }, []);
 
   const hadnleOnSubmit = async (e) => {
     e.preventDefault();
-    const formdata = new FormData(e.target)
     const response = await fetch(`${process.env.REACT_APP_API_USER_UPDATE}`, {
       method: "POST",
       body: new FormData(e.target),
@@ -35,16 +35,9 @@ const Profile = ({ token }) => {
     const json = await response.json();
     if (json.success) {
       alert(json.messages);
-      for (const item of formdata.entries()){ 
-        if (item[0] == 'avatar'){ 
-          console.log(item[1])
-        }
-      }
-      console.log(user)
+      setUser(json.data)
     } else alert(json.messages);
   };
-  useEffect(() =>{
-  } ,[user])
   return (
     <>
       <form onSubmit={hadnleOnSubmit} method="POST">
@@ -162,7 +155,7 @@ const Profile = ({ token }) => {
       <div className="mb-4 p-3">
         <div className="alert alert-info">My Posts</div>
         <ul className="list-group">
-              <Posts userPosts={user.posts}/>
+          <Posts userPosts={user.posts} token={token} />
         </ul>
       </div>
     </>
