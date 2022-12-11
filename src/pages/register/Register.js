@@ -25,9 +25,7 @@ const Register = () => {
             <h1 className="mb-4">Create Account</h1>
             <form onSubmit={register} method="POST">
               <div className="form-field mb-3">
-                <label htmlFor="name" className="mb-2">
-                  Name
-                </label>
+                <label htmlFor="name" className="mb-2">Name</label>
                 <input
                   type="text"
                   name="name"
@@ -36,9 +34,7 @@ const Register = () => {
                 />
               </div>
               <div className="form-field mb-3">
-                <label htmlFor="email" className="mb-2">
-                  Email Address
-                </label>
+                <label htmlFor="email" className="mb-2">Email Address</label>
                 <input
                   type="email"
                   name="email"
@@ -47,9 +43,7 @@ const Register = () => {
                 />
               </div>
               <div className="form-field mb-3">
-                <label htmlFor="password" className="mb-2">
-                  Password
-                </label>
+                <label htmlFor="password" className="mb-2">Password</label>
                 <input
                   type="password"
                   name="password"
@@ -58,9 +52,7 @@ const Register = () => {
                 />
               </div>
               <div className="form-field mb-3">
-                <label htmlFor="passwordConfirmation" className="mb-2">
-                  Password Conformation
-                </label>
+                <label htmlFor="passwordConfirmation" className="mb-2">Password Conformation</label>
                 <input
                   type="password"
                   name="password_confirmation"
