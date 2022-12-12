@@ -1,13 +1,15 @@
 import classes from "./Profile.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Posts from "./Posts";
-const Profile = ({ token }) => {
+import WrraperComponent from "../../pages/WrraperComponent/WrraperComponent";
+import { AuthContext } from "../../contexts/AuthContext";
+
+const Profile = () => {
+  const { user:passedUser, token } = useContext(AuthContext);
   const [user, setUser] = useState({
-    id: "",
-    name: "",
-    email: "",
-    avatar: "",
-    posts: [],
+    name: passedUser.name,
+    email: passedUser.email,
+    
   });
   const getUser = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_USER_UPDATE}`, {
@@ -35,11 +37,11 @@ const Profile = ({ token }) => {
     const json = await response.json();
     if (json.success) {
       alert(json.messages);
-      setUser(json.data)
+      setUser({ ...user, ...json.data });
     } else alert(json.messages);
   };
   return (
-    <>
+    <WrraperComponent title="Profile">
       <form onSubmit={hadnleOnSubmit} method="POST">
         <div className="p-3">
           <div className="alert alert-info">My Information</div>
@@ -49,8 +51,8 @@ const Profile = ({ token }) => {
               className={`mx-auto my-2 d-block w-25  ${classes.avatar}`}
             >
               <img
-                src={user.avatar}
-                alt={user.name}
+                src={user?.avatar}
+                alt={user?.name}
                 className="d-block mx-auto rounded-circle w-100"
               />
               <div className={classes.icon}>
@@ -94,7 +96,6 @@ const Profile = ({ token }) => {
           <div className="form-field mb-3">
             <label htmlFor="email" className="mb-2">
               <small>
-                {" "}
                 Email Address<span className="text-danger">*</span>{" "}
               </small>
             </label>
@@ -155,10 +156,10 @@ const Profile = ({ token }) => {
       <div className="mb-4 p-3">
         <div className="alert alert-info">My Posts</div>
         <ul className="list-group">
-          <Posts userPosts={user.posts} token={token} />
+          <Posts userPosts={user?.posts} token={token} />
         </ul>
       </div>
-    </>
+    </WrraperComponent>
   );
 };
 

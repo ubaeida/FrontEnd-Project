@@ -8,7 +8,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import LockIcon from "@mui/icons-material/Lock";
 import { NavLink } from "react-router-dom";
 
-const Nav = ({ setActiveCompontet }) => {
+const Nav = () => {
   const links = [
     {
       target: "/",
@@ -56,7 +56,7 @@ const Nav = ({ setActiveCompontet }) => {
           <NavLink
             key={i}
             to={link.target}
-            className={({ isActive }) => isActive ? `${setActiveCompontet(link.text)} ${classes.menuItems} ${classes.active}`
+            className={({ isActive }) => isActive ?`${classes.menuItems} ${classes.active}`
                 : `${classes.menuItems}`
             }>
             <div>{link.icon}</div>

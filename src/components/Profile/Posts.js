@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 
 const Posts = ({ userPosts, token }) => {
-  const  [updatedUserPosts , setUpdatedUserPosts] = useState()
-
+  const  [updatedUserPosts , setUpdatedUserPosts] = useState([])
   const handleDeletePost = async (id, index) => {
     let isExecuted = window.confirm(
       "Are you sure you want to delete this post?"
