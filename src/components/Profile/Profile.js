@@ -5,7 +5,7 @@ import WrraperComponent from "../../pages/WrraperComponent/WrraperComponent";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const Profile = () => {
-  const { user:passedUser, token } = useContext(AuthContext);
+  const { user:passedUser, token, login: setContextUser } = useContext(AuthContext);
   const [user, setUser] = useState({
     name: passedUser.name,
     email: passedUser.email,
@@ -13,7 +13,7 @@ const Profile = () => {
   });
   const getUser = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_USER_UPDATE}`, {
-      headers: { authorization: `Bearer ${token}` },
+      headers: { "authorization": `Bearer ${token}` },
     });
     const json = await response.json();
     setUser(json.data);
@@ -37,7 +37,9 @@ const Profile = () => {
     const json = await response.json();
     if (json.success) {
       alert(json.messages);
+      console.log(json)
       setUser({ ...user, ...json.data });
+      setContextUser(json.data, token)
     } else alert(json.messages);
   };
   return (

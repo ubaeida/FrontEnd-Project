@@ -1,9 +1,11 @@
-import {createContext, useState } from "react";
+import { createContext, useState } from "react";
 
 export const AuthContext = createContext();
 
-const UserMagnger = ({children}) => {
-  const [user, setUser] = useState( JSON.parse(localStorage.getItem("the_user") || "{}"));
+const UserMagnger = ({ children }) => {
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("the_user") || "{}")
+  );
   const [token, setToken] = useState(localStorage.getItem("the_token") || "");
 
   const login = (userData, userToken) => {
@@ -12,13 +14,12 @@ const UserMagnger = ({children}) => {
     localStorage.setItem("the_token", userToken);
     localStorage.setItem("the_user", JSON.stringify(userData));
   };
-  const logout = () => { 
+  const logout = () => {
     localStorage.removeItem("the_token");
     localStorage.removeItem("the_user");
-
-  }
+  };
   return (
-    <AuthContext.Provider value={{user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout, setUser }}>
       {children}
     </AuthContext.Provider>
   );

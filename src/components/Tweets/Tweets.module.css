@@ -1,0 +1,72 @@
+.textBoxArea {
+  display: flex;
+  border-bottom: 6px solid #f3f4f5;
+  padding: 10px 15px;
+}
+
+.textBoxArea > img {
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  border-radius: 20px;
+}
+.textarea {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.textarea > textarea {
+  border: 0;
+  width: 100%;
+  height: 120px;
+  outline: none;
+  resize: none;
+  width: 100%;
+}
+
+.post {
+  border-bottom: 1px solid #f3f4f5;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 15px;
+
+}
+.post:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+.postContent {
+  display: flex;
+  overflow: hidden;
+}
+.postContent > img {
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  border-radius: 20px;
+}
+
+.datetime {
+  font-size: 13px;
+  font-weight: 200;
+}
+.name {
+    font-weight: 600;
+}
+
+.comments { 
+ margin: 15px 15px 15px 55px;
+}
+.comment > img {
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  border-radius: 20px;
+}
+
+.addcomment{ 
+  border-top: 1px solid #e5e6e7;
+  margin-top: 15px;
+  padding-top: 15px;
+
+}

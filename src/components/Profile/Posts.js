@@ -12,7 +12,7 @@ const Posts = ({ userPosts, token }) => {
         {
           method: "DELETE",
           headers: {
-            authorization: `Bearer ${token}`,
+            "authorization": `Bearer ${token}`,
           },
         }
       );
