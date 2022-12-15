@@ -1,23 +1,17 @@
 import WrraperComponent from "../../pages/WrraperComponent/WrraperComponent";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import classes from "./Tweets.module.css";
 import { useContext, useState, useEffect, useRef } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import Likes from "./Likes/likes";
-import Comments from "./Comments/Comments";
-import "dayjs/locale/es";
-
+import Tweet from "./Tweet";
+import Loading from "../Loading/Loading";
 const Tweets = () => {
-  const dayjs = require("dayjs");
-  var relativeTime = require("dayjs/plugin/relativeTime");
-  dayjs.extend(relativeTime);
-  const { user, token } = useContext(AuthContext);
+  const { user, token, disable, setDisable } = useContext(AuthContext);
   const [tweets, setTweets] = useState([]);
   const [count, setCount] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [showcomments, setShowComments] = useState(false);
   const tweetTxtRef = useRef();
+
   let isFetching = true;
   const getTweets = async () => {
     if (isFetching) {
@@ -49,7 +43,7 @@ const Tweets = () => {
     if (
       !isFetching &&
       hasMore &&
-      window.innerHeight + document.documentElement.scrollTop + 1 >=
+      window.innerHeight + document.documentElement.scrollTop + 100 >=
         document.documentElement.offsetHeight
     ) {
       isFetching = true;
@@ -72,7 +66,7 @@ const Tweets = () => {
   const addPost = async () => {
     const tweetTxt = tweetTxtRef.current.value;
     if (tweetTxt.length < 10)
-      alert("The content must be at least 10 characters.");
+      alert("The tweet must be at least 10 characters.");
     else {
       const response = await fetch(
         `${process.env.REACT_APP_API_POST_ADD_POST}`,
@@ -94,6 +88,7 @@ const Tweets = () => {
         alert(json.message);
       }
     }
+    setDisable(false)
   };
 
   return (
@@ -106,52 +101,22 @@ const Tweets = () => {
             spellCheck="false"
             ref={tweetTxtRef}
           ></textarea>
-          <button onClick={addPost} className="btn btn-primary">
+          <button onClick={() => {addPost(); setDisable(true)}} disabled={disable} className="btn btn-primary">
             Create Post
           </button>
         </div>
       </div>
       <div className="mb-4">
         {tweets?.map((tweet, index) => (
-          <div key={index} className={classes.post}>
-            <div className={classes.postContent}>
-              <img src={tweet?.user.avatar} alt={tweet.user.name} />
-              <div>
-                <div className={`mb-0 name ${classes.name}`}>
-                  {tweet?.user.name}
-                </div>
-                <div className={`mb-2 ${classes.datetime}`}>
-                  {dayjs(tweet?.created_at).fromNow()}
-                </div>
-                <p>{tweet?.content}</p>
-                <div className=" d-flex align-items-center">
-                  <span className=" d-flex align-items-center">
-                    <Likes
-                      tweets={tweets}
-                      setTweets={setTweets}
-                      tweet_id={tweet.id}
-                      liked_by_current_user={tweet.liked_by_current_user}
-                      index={index}
-                      likes_count={tweet?.likes_count}
-                    />
-                  </span>
-                  <span
-                    onClick={() => !showcomments && tweet?.comments_count > 0? setShowComments(true): setShowComments(false)}
-                    className=" d-flex align-items-center"
-                  >
-                    <div className="me-3 border rounded border bg-light py-1 px-2 d-flex align-items-center">
-                      <ChatBubbleOutlineIcon />
-                      <div className="ms-2 fw-bolder">
-                        {tweet?.comments_count}
-                      </div>
-                    </div>
-                  </span>
-                </div>
-              </div>
-            </div>
-            {showcomments && tweet?.comments_count > 0 && <Comments showcomments={showcomments} tweet_id={tweet.id} comments_counts={tweet?.comments_count}/>}
-          </div>
+          <Tweet
+            tweet={tweet}
+            key={index}
+            tweets={tweets}
+            setTweets={setTweets}
+            index={index}
+          />
         ))}
+        {isFetching && <Loading />}
         {!hasMore && (
           <div className="text-center my-4 fst-italic fw-bold text-secondary">
             The end of the posts

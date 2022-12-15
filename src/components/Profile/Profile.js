@@ -5,7 +5,7 @@ import WrraperComponent from "../../pages/WrraperComponent/WrraperComponent";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const Profile = () => {
-  const { user:passedUser, token, login: setContextUser } = useContext(AuthContext);
+  const { user:passedUser, token, login: setContextUser, disable, setDisable } = useContext(AuthContext);
   const [user, setUser] = useState({
     name: passedUser.name,
     email: passedUser.email,
@@ -37,14 +37,14 @@ const Profile = () => {
     const json = await response.json();
     if (json.success) {
       alert(json.messages);
-      console.log(json)
       setUser({ ...user, ...json.data });
       setContextUser(json.data, token)
     } else alert(json.messages);
+    setDisable(false)
   };
   return (
     <WrraperComponent title="Profile">
-      <form onSubmit={hadnleOnSubmit} method="POST">
+      <form onSubmit={(e) => {hadnleOnSubmit(e); setDisable(true)}} method="POST">
         <div className="p-3">
           <div className="alert alert-info">My Information</div>
           <div className={`form-field mb-3 person-avatar }`}>
@@ -149,7 +149,7 @@ const Profile = () => {
           </div>
           <input type="hidden" name="_method" value="put" />
           <div className="form-field mb-3">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" disabled={disable} className="btn btn-primary">
               Update Profile
             </button>
           </div>

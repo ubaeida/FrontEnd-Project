@@ -1,7 +1,12 @@
 import classes from "./Register.module.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+import React from "react";
 const Register = () => {
   const navigate = useNavigate();
+  const authCtx = useContext(AuthContext);
+
   const register = async (e) => {
     e.preventDefault();
     const response = await fetch(`${process.env.REACT_APP_API_REGISTER}`, {
@@ -10,7 +15,10 @@ const Register = () => {
     });
     const json = await response.json();
     if (json.success) navigate("/login");
-    else alert(json.messages);
+    else {
+      alert(json.messages);
+    }
+    authCtx.setDisable(false);
   };
   return (
     <div className="container">
@@ -23,9 +31,17 @@ const Register = () => {
               <img src="logo.svg" alt="logo" />
             </div>
             <h1 className="mb-4">Create Account</h1>
-            <form onSubmit={register} method="POST">
+            <form
+              onSubmit={(e) => {
+                register(e);
+                authCtx.setDisable(true);
+              }}
+              method="POST"
+            >
               <div className="form-field mb-3">
-                <label htmlFor="name" className="mb-2">Name</label>
+                <label htmlFor="name" className="mb-2">
+                  Name
+                </label>
                 <input
                   type="text"
                   name="name"
@@ -34,7 +50,9 @@ const Register = () => {
                 />
               </div>
               <div className="form-field mb-3">
-                <label htmlFor="email" className="mb-2">Email Address</label>
+                <label htmlFor="email" className="mb-2">
+                  Email Address
+                </label>
                 <input
                   type="email"
                   name="email"
@@ -43,7 +61,9 @@ const Register = () => {
                 />
               </div>
               <div className="form-field mb-3">
-                <label htmlFor="password" className="mb-2">Password</label>
+                <label htmlFor="password" className="mb-2">
+                  Password
+                </label>
                 <input
                   type="password"
                   name="password"
@@ -52,7 +72,9 @@ const Register = () => {
                 />
               </div>
               <div className="form-field mb-3">
-                <label htmlFor="passwordConfirmation" className="mb-2">Password Conformation</label>
+                <label htmlFor="passwordConfirmation" className="mb-2">
+                  Password Conformation
+                </label>
                 <input
                   type="password"
                   name="password_confirmation"
@@ -67,8 +89,9 @@ const Register = () => {
                 <div className="col-7">
                   <input
                     type="submit"
+                    disabled={authCtx.disable}
+                    value={!authCtx.disable ? "Register" : "Please Wait"}
                     className="btn btn-primary w-100"
-                    value="Register"
                   />
                 </div>
               </div>

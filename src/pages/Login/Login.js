@@ -6,8 +6,8 @@ import { AuthContext } from "../../contexts/AuthContext";
 const Login = () => {
   const passwordref = useRef();
   const emailref = useRef();
-  const authCtx = useContext(AuthContext)
-  const navigate = useNavigate()
+  const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const login = async () => {
     const email = emailref.current.value;
@@ -15,15 +15,19 @@ const Login = () => {
     const response = await fetch(`${process.env.REACT_APP_API_LOGIN}`, {
       method: "POST",
       body: JSON.stringify({ email: email, password: password }),
-      headers: {'Content-Type': 'application/json'}});
+      headers: { "Content-Type": "application/json" },
+    });
 
     const json = await response.json();
 
     if (json.success) {
-      authCtx.login(json.data, json.token)
-      alert(json.messages)
-      navigate('/')
-    } else alert(json.messages);
+      authCtx.login(json.data, json.token);
+      alert(json.messages);
+      navigate("/");
+    } else {
+      alert(json.messages);
+    }
+    authCtx.setDisable(false)
   };
   return (
     <div className="container">
@@ -65,9 +69,16 @@ const Login = () => {
                 <Link to={`/register`}>Register</Link>
               </div>
               <div className="col-7">
-                <button onClick={login} className="btn btn-primary w-100">
-                  Login
-                </button>
+                <input
+                  type="button"
+                  disabled={authCtx.disable}
+                  onClick={() => {
+                    login();
+                    authCtx.setDisable(true);
+                  }}
+                  value={!authCtx.disable ? "Login" : "Please Wait"}
+                  className="btn btn-primary w-100"
+                />
               </div>
             </div>
           </div>

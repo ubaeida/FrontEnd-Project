@@ -24,8 +24,13 @@ const Likes = ({
         },
       });
       const json = await response.json();
-      tweets.splice(index, 1, json.data);
-      setTweets([...tweets]);
+      if (json.success) {
+        console.log(json);
+        tweets.splice(index, 1, json.data);
+        setTweets([...tweets]);
+      } else {
+        alert(json.messages);
+      }
     } else {
       const response = await fetch(process.env.REACT_APP_API_POST_DISLIKE, {
         method: "POST",
@@ -36,15 +41,20 @@ const Likes = ({
         },
       });
       const json = await response.json();
-      tweets.splice(index, 1, json.data);
-      setTweets([...tweets]);
+      if (json.success) {
+        console.log(json);
+        tweets.splice(index, 1, json.data);
+        setTweets([...tweets]);
+      } else {
+        alert(json.messages);
+      }
     }
   };
 
   return (
     <div
       className="me-3 border rounded border bg-light py-1 px-2 d-flex align-items-center"
-      onClick={(e) => handleLike(tweet_id, liked_by_current_user, index)}
+      onClick={() => handleLike(tweet_id, liked_by_current_user, index)}
     >
       {liked_by_current_user ? (
         <FavoriteIcon style={{ color: "rgb(211, 47, 47)" }} />
