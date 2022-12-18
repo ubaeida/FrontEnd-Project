@@ -5,9 +5,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 const Comments = ({
   tweet_id,
   dayjs,
-  showComments,
   setCommentsCount,
-  index,
 }) => {
   const { user, token, disable, setDisable, darkMode } =
     useContext(AuthContext);
@@ -47,7 +45,7 @@ const Comments = ({
     });
     const json = await respone.json();
     if (json.success) {
-      comments.push(json.data)
+      comments.push(json.data);
       setComments([...comments]);
       setCommentsCount(comments.length);
       commentTxtRef.current.value = "";
@@ -89,65 +87,63 @@ const Comments = ({
   };
   return (
     <>
-      {showComments && (
-        <div className={`mb-4 ${classes.comments}`}>
-          {comments?.map((comment, index) => {
-            return (
-              <div
-                key={index}
-                className={`comment d-flex mb-3 ${classes.comment}`}
-              >
-                <img src={comment?.user.avatar} alt={comment?.user.name} />
-                <div>
-                  <div className={classes.name}>{comment?.user.name}</div>
-                  <div className={`mb-2 ${classes.datetime}`}>
-                    {dayjs(comment?.created_at).fromNow()}
-                  </div>
-                  <div>{comment?.content}</div>
-                  {comment.user.id === user.id && (
-                    <button
-                      disabled={disable}
-                      className="btn btn-danger mt-3 btn-sm"
-                      onClick={() => {
-                        setDisable(true);
-                        deleteComment(comment.id, index);
-                      }}
-                    >
-                      Delete
-                    </button>
-                  )}
+      <div className={`mb-4 ${classes.comments}`}>
+        {comments?.map((comment, index) => {
+          return (
+            <div
+              key={index}
+              className={`comment d-flex mb-3 ${classes.comment}`}
+            >
+              <img src={comment?.user.avatar} alt={comment?.user.name} />
+              <div>
+                <div className={classes.name}>{comment?.user.name}</div>
+                <div className={`mb-2 ${classes.datetime}`}>
+                  {dayjs(comment?.created_at).fromNow()}
                 </div>
+                <div>{comment?.content}</div>
+                {comment.user.id === user.id && (
+                  <button
+                    disabled={disable}
+                    className="btn btn-danger mt-3 btn-sm"
+                    onClick={() => {
+                      setDisable(true);
+                      deleteComment(comment.id, index);
+                    }}
+                  >
+                    Delete
+                  </button>
+                )}
               </div>
-            );
-          })}
-          <div className={`container-fluid ${classes.addcomment}`}>
-            <div className="row">
-              <div className="col-9 ps-0">
-                <input
-                  type="text"
-                  className={`form-control ${
-                    darkMode ? `${classes.inputDark}` : ""
-                  }`}
-                  placeholder="Add a new comment"
-                  ref={commentTxtRef}
-                />
-              </div>
-              <div className="col-3 p-0">
-                <button
-                  onClick={() => {
-                    addComment();
-                    setDisable(true);
-                  }}
-                  disabled={disable}
-                  className="btn btn-primary w-100"
-                >
-                  <small>Add</small>
-                </button>
-              </div>
+            </div>
+          );
+        })}
+        <div className={`container-fluid ${classes.addcomment}`}>
+          <div className="row">
+            <div className="col-9 ps-0">
+              <input
+                type="text"
+                className={`form-control ${
+                  darkMode ? `${classes.inputDark}` : ""
+                }`}
+                placeholder="Add a new comment"
+                ref={commentTxtRef}
+              />
+            </div>
+            <div className="col-3 p-0">
+              <button
+                onClick={() => {
+                  addComment();
+                  setDisable(true);
+                }}
+                disabled={disable}
+                className="btn btn-primary w-100"
+              >
+                <small>Add</small>
+              </button>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 };

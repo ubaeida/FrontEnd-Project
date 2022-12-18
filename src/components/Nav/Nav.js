@@ -81,19 +81,21 @@ const Nav = () => {
         ))}
         <div className={classes.content}>
           <i>
-            <FontAwesomeIcon icon={faMoon} />
+            <FontAwesomeIcon icon={faSun} />
           </i>
           &nbsp;&nbsp;&nbsp;
           <input
             type="checkbox"
             id="tooglenight"
             className={`${classes.cbx} ${classes.hidden}`}
-            onChange={(e) => setDarkMode(!darkMode)}
+            onChange={(e) => {
+              localStorage.setItem("darkMode", !darkMode);
+              setDarkMode(!darkMode)}}
           />
           <label htmlFor="tooglenight" className={classes.switch}></label>
           &nbsp;&nbsp;&nbsp;
           <i>
-            <FontAwesomeIcon icon={faSun} />
+            <FontAwesomeIcon icon={faMoon} />
           </i>
         </div>
       </div>

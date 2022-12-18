@@ -5,11 +5,8 @@ import { AuthContext } from "../../contexts/AuthContext";
 import Tweet from "./Tweet";
 import Loading from "../Loading/Loading";
 const Tweets = () => {
-  const { user, token, disable, setDisable, darkMode } =
-    useContext(AuthContext);
+  const { user, token, disable, setDisable, darkMode } = useContext(AuthContext);
   const [tweets, setTweets] = useState([]);
-  const [updatedTweets, setUpdatedTweets] = useState([]);
-
   const [count, setCount] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -63,7 +60,7 @@ const Tweets = () => {
     };
     // eslint-disable-next-line
   }, [count]);
-
+  
   const addPost = async () => {
     const tweetTxt = tweetTxtRef.current.value;
     if (tweetTxt.length < 10) {
@@ -83,7 +80,7 @@ const Tweets = () => {
       );
       const json = await response.json();
       if (json.success) {
-        setUpdatedTweets([json.data, ...tweets]);
+        setTweets([json.data, ...tweets]);
         tweetTxtRef.current.value = "";
       } else {
         alert(json.message);
@@ -91,10 +88,6 @@ const Tweets = () => {
     }
     setDisable(false);
   };
-  useEffect(() => {
-    setTweets([...updatedTweets]);
-  }, [updatedTweets]);
-
   return (
     <WrraperComponent title="Home">
       <div

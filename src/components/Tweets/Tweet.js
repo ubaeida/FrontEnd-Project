@@ -3,7 +3,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import "dayjs/locale/es";
 import Likes from "./Likes/likes";
 import Comments from "./Comments/Comments";
-import { useState, useContext } from "react";
+import { useState, useContext,useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const Tweet = ({ tweet, tweets, setTweets, index }) => {
@@ -11,8 +11,13 @@ const Tweet = ({ tweet, tweets, setTweets, index }) => {
   var relativeTime = require("dayjs/plugin/relativeTime");
   dayjs.extend(relativeTime);
   const [showComments, setShowComments] = useState();
-  const [commentsCount, setCommentsCount] = useState(tweet.comments_count);
+  const [commentsCount, setCommentsCount] = useState();
   const { darkMode } = useContext(AuthContext);
+  useEffect(()=> { 
+    setCommentsCount(tweet.comments_count)
+    setShowComments(false)
+  },[tweet])
+
   return (
     <div className={ darkMode? `${classes.post} ${classes.postDark}` : `${classes.post}`}>
       <div className={classes.postContent}>
@@ -49,7 +54,6 @@ const Tweet = ({ tweet, tweets, setTweets, index }) => {
       </div>
       {showComments && (
         <Comments
-          showComments={showComments}
           tweet_id={tweet.id}
           dayjs={dayjs}
           commentsCount={commentsCount}
