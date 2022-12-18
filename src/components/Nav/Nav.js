@@ -7,8 +7,13 @@ import ViewListIcon from "@mui/icons-material/ViewList";
 import PersonIcon from "@mui/icons-material/Person";
 import LockIcon from "@mui/icons-material/Lock";
 import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Nav = () => {
+  const { darkMode, setDarkMode } = useContext(AuthContext);
   const links = [
     {
       target: "/",
@@ -53,16 +58,44 @@ const Nav = () => {
       </div>
       <div className={classes.menu}>
         {links.map((link, i) => (
-          <NavLink
+          <div
             key={i}
-            to={link.target}
-            className={({ isActive }) => isActive ?`${classes.menuItems} ${classes.active}`
-                : `${classes.menuItems}`
-            }>
-            <div>{link.icon}</div>
-            <div>{link.text}</div>
-          </NavLink>
+            className={
+              darkMode
+                ? `${classes.menuItemsDark}`
+                : `${classes.menuItemsLight}`
+            }
+          >
+            <NavLink
+              to={link.target}
+              className={({ isActive }) =>
+                isActive
+                  ? ` ${classes.menuItems} ${classes.active}`
+                  : `${classes.menuItems}`
+              }
+            >
+              <div>{link.icon}</div>
+              <div>{link.text}</div>
+            </NavLink>
+          </div>
         ))}
+        <div className={classes.content}>
+          <i>
+            <FontAwesomeIcon icon={faMoon} />
+          </i>
+          &nbsp;&nbsp;&nbsp;
+          <input
+            type="checkbox"
+            id="tooglenight"
+            className={`${classes.cbx} ${classes.hidden}`}
+            onChange={(e) => setDarkMode(!darkMode)}
+          />
+          <label htmlFor="tooglenight" className={classes.switch}></label>
+          &nbsp;&nbsp;&nbsp;
+          <i>
+            <FontAwesomeIcon icon={faSun} />
+          </i>
+        </div>
       </div>
     </nav>
   );

@@ -5,16 +5,20 @@
 
 header{ 
     width: 300px;
-    height: 100vh;
     display: flex;
     align-items: center;
     flex-direction: column;
+    position: sticky;
+    top: 0;
 }
 .content{ 
   width: 600px;
   border: 1px solid #f3f4f5;
 }
+.contentDark{ 
+  border: 1px solid #373c3e;
 
+}
 @media only screen and (max-width: 992px) {
   header {
     width: 200px;

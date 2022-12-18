@@ -26,3 +26,13 @@ form {
     opacity: 1;
     background-color: rgba(0,0,0,.3);
 }
+.inputDark {
+    background-color: #373c3e;
+    color: #e8e6e3;
+  }
+  
+  .inputDark:focus {
+    background-color: #373c3e;
+    color: #e8e6e3;
+  }
+  

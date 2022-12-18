@@ -3,7 +3,8 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import "dayjs/locale/es";
 import Likes from "./Likes/likes";
 import Comments from "./Comments/Comments";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Tweet = ({ tweet, tweets, setTweets, index }) => {
   const dayjs = require("dayjs");
@@ -11,9 +12,9 @@ const Tweet = ({ tweet, tweets, setTweets, index }) => {
   dayjs.extend(relativeTime);
   const [showComments, setShowComments] = useState();
   const [commentsCount, setCommentsCount] = useState(tweet.comments_count);
-  
+  const { darkMode } = useContext(AuthContext);
   return (
-    <div className={classes.post}>
+    <div className={ darkMode? `${classes.post} ${classes.postDark}` : `${classes.post}`}>
       <div className={classes.postContent}>
         <img src={tweet?.user.avatar} alt={tweet.user.name} />
         <div>
@@ -36,7 +37,7 @@ const Tweet = ({ tweet, tweets, setTweets, index }) => {
               onClick={(e) => {
                 setShowComments(true);
               }}
-              className="me-3 border rounded border bg-light py-1 px-2 d-flex align-items-center"
+              className={` me-3 border rounded border py-1 px-2 d-flex align-items-center ${ !darkMode? `bg-light ` : `bg-dark`}`}
             >
               <ChatBubbleOutlineIcon id={tweet.id} />
               <div id={tweet.id} className="ms-2 fw-bolder">

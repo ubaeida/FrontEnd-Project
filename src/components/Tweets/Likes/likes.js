@@ -11,7 +11,7 @@ const Likes = ({
   index,
   likes_count,
 }) => {
-  const { token } = useContext(AuthContext);
+  const { token, darkMode } = useContext(AuthContext);
 
   const handleLike = async (id, liked, index) => {
     if (!liked) {
@@ -25,7 +25,6 @@ const Likes = ({
       });
       const json = await response.json();
       if (json.success) {
-        console.log(json);
         tweets.splice(index, 1, json.data);
         setTweets([...tweets]);
       } else {
@@ -42,7 +41,6 @@ const Likes = ({
       });
       const json = await response.json();
       if (json.success) {
-        console.log(json);
         tweets.splice(index, 1, json.data);
         setTweets([...tweets]);
       } else {
@@ -53,7 +51,7 @@ const Likes = ({
 
   return (
     <div
-      className="me-3 border rounded border bg-light py-1 px-2 d-flex align-items-center"
+      className={` me-3 border rounded border py-1 px-2 d-flex align-items-center ${ !darkMode? `bg-light ` : `bg-dark`}`}
       onClick={() => handleLike(tweet_id, liked_by_current_user, index)}
     >
       {liked_by_current_user ? (

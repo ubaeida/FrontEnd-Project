@@ -2,11 +2,17 @@ import classes from "../Tweets.module.css";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 
-const Comments = ({ tweet_id, dayjs, showComments, setCommentsCount }) => {
-  const { token, disable, setDisable } = useContext(AuthContext);
+const Comments = ({
+  tweet_id,
+  dayjs,
+  showComments,
+  setCommentsCount,
+  index,
+}) => {
+  const { user, token, disable, setDisable, darkMode } =
+    useContext(AuthContext);
   const commentTxtRef = useRef();
   const [comments, setComments] = useState([]);
-
   useEffect(() => {
     const getComments = async () => {
       const respnse = await fetch(
@@ -20,7 +26,6 @@ const Comments = ({ tweet_id, dayjs, showComments, setCommentsCount }) => {
       );
       const json = await respnse.json();
       if (json.success) {
-        console.log(json);
         setComments([...json.data.comments]);
       } else {
         alert(json.messages[0]);
@@ -41,9 +46,8 @@ const Comments = ({ tweet_id, dayjs, showComments, setCommentsCount }) => {
       },
     });
     const json = await respone.json();
-    console.log(json);
     if (json.success) {
-      comments.push(json.data);
+      comments.push(json.data)
       setComments([...comments]);
       setCommentsCount(comments.length);
       commentTxtRef.current.value = "";
@@ -53,6 +57,36 @@ const Comments = ({ tweet_id, dayjs, showComments, setCommentsCount }) => {
     setDisable(false);
   };
 
+  const deleteComment = async (id, index) => {
+    let isExecuted = window.confirm(
+      "Are you sure you want to delete this comment?"
+    );
+    if (isExecuted) {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_POST_DELETE_COMMENT}/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const json = await response.json();
+      if (json.success) {
+        comments.splice(index, 1);
+        setComments([...comments]);
+        setCommentsCount(comments.length);
+        commentTxtRef.current.value = "";
+      } else {
+        alert(json.messages);
+      }
+      setDisable(false);
+    } else {
+      setDisable(false);
+      return;
+    }
+  };
   return (
     <>
       {showComments && (
@@ -69,7 +103,19 @@ const Comments = ({ tweet_id, dayjs, showComments, setCommentsCount }) => {
                   <div className={`mb-2 ${classes.datetime}`}>
                     {dayjs(comment?.created_at).fromNow()}
                   </div>
-                  {comment?.content}
+                  <div>{comment?.content}</div>
+                  {comment.user.id === user.id && (
+                    <button
+                      disabled={disable}
+                      className="btn btn-danger mt-3 btn-sm"
+                      onClick={() => {
+                        setDisable(true);
+                        deleteComment(comment.id, index);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  )}
                 </div>
               </div>
             );
@@ -79,7 +125,9 @@ const Comments = ({ tweet_id, dayjs, showComments, setCommentsCount }) => {
               <div className="col-9 ps-0">
                 <input
                   type="text"
-                  className="form-control"
+                  className={`form-control ${
+                    darkMode ? `${classes.inputDark}` : ""
+                  }`}
                   placeholder="Add a new comment"
                   ref={commentTxtRef}
                 />

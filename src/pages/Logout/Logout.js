@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 
 const Logout = () => {
-  const { token, logout } = useContext(AuthContext);
+  const { token, logout, setDarkMode } = useContext(AuthContext);
   const navigate = useNavigate();
   const logoutFun = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_LOGOUT}`, {
@@ -16,6 +16,7 @@ const Logout = () => {
     const json = await response.json();
     if (json.success) {
       logout();
+      setDarkMode(false)
       navigate("/login");
     } else alert(json.messages);
   };

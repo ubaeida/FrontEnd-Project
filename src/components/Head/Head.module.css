@@ -1,38 +1,50 @@
-.head { 
-    border-bottom: 1px solid #f3f4f5;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 10px 15px;
-    
+.head {
+  border-bottom: 1px solid #e8e6e3;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 15px;
+  top: 0;
+  position: sticky;
 }
-.headTitle{
-    display: flex;
+.headDark {
+  background-color: #18191a;
+  color: #e8e6e3;
+  border-bottom: 1px solid #373c3e;
+
 }
-.headTitle h3{
-    align-self: center;
+.headLight { 
+    background-color: white;
+    color: #000;
+    border-bottom: 1px solid #e8e6e3;
 }
-.iconsBar{
-    display: none;
+.headTitle {
+  display: flex;
 }
-.icons { 
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around ;
+.headTitle h3 {
+  align-self: center;
 }
-.icons div { 
-    margin: 5px;
-    background-color:#f3f4f5;
-    border-radius: 35px;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.iconsBar {
+  display: none;
+}
+.icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.icons div {
+  margin: 5px;
+  background-color: #f3f4f5;
+  border-radius: 35px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media only screen and (max-width: 768px) {
-    .iconsBar{
-        display: block;
-    }    
+  .iconsBar {
+    display: block;
+  }
 }

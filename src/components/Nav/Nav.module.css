@@ -9,6 +9,8 @@ nav {
   flex-direction: column;
   align-items: flex-start;
   margin-top: 15px;
+  position: sticky;
+  top: 0;
 }
 
 .menu {
@@ -21,10 +23,14 @@ nav {
 .menuItems {
   text-decoration: none;
   display: flex;
-  color: #000;
   padding: 15px 15px;
   margin-bottom: 10px;
-  
+}
+.menuItemsDark a { 
+  color: #e8e6e3;
+}
+.menuItemsLight a{
+  color: #000;
 }
 .menuItems > div:first-child {
   margin-right: 10px;
@@ -39,5 +45,52 @@ nav {
 .active {
   background-color: #f3f4f5;
   border-radius: 40px;
-  color: #1da1f2;
+  color: #1da1f2 !important; 
 }
+.content{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-self: center;
+  align-items: center;
+}
+.content > i{
+  font-size: 20px;
+  transition: all .2s ease-in;
+}
+/* custom checkbox*/
+.switch {
+    position: relative;
+    display: block;
+    height: 20px;
+    width: 44px;
+    background: #303030;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .switch:after {
+    position: absolute;
+    left: -2px;
+    top: -3px;
+    display: block;
+    width: 26px;
+    height: 26px;
+    border-radius: 100px;
+    background: black;
+    box-shadow: 0px 3px 3px rgba(0,0,0,0.05);
+    content: '';
+    transition: all 0.3s ease;
+  }
+  .switch:active:after { transform: scale(1.15, 0.85); }
+  .cbx:checked ~ label { background: #EBEBEB; }
+  .cbx:checked ~ label:after {
+    left: 20px;
+    background: #FFFFFF;
+  }
+  .cbx:disabled ~ label {
+    background: #d5d5d5;
+    pointer-events: none;
+  }
+  .cbx:disabled ~ label:after { background: #bcbdbc; }
+  .hidden { display: none; }

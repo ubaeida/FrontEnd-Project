@@ -5,15 +5,21 @@ import WrraperComponent from "../../pages/WrraperComponent/WrraperComponent";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const Profile = () => {
-  const { user:passedUser, token, login: setContextUser, disable, setDisable } = useContext(AuthContext);
+  const {
+    user: passedUser,
+    token,
+    login: setContextUser,
+    disable,
+    setDisable,
+    darkMode,
+  } = useContext(AuthContext);
   const [user, setUser] = useState({
     name: passedUser.name,
     email: passedUser.email,
-    
   });
   const getUser = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_USER_UPDATE}`, {
-      headers: { "authorization": `Bearer ${token}` },
+      headers: { authorization: `Bearer ${token}` },
     });
     const json = await response.json();
     setUser(json.data);
@@ -38,13 +44,19 @@ const Profile = () => {
     if (json.success) {
       alert(json.messages);
       setUser({ ...user, ...json.data });
-      setContextUser(json.data, token)
+      setContextUser(json.data, token);
     } else alert(json.messages);
-    setDisable(false)
+    setDisable(false);
   };
   return (
     <WrraperComponent title="Profile">
-      <form onSubmit={(e) => {hadnleOnSubmit(e); setDisable(true)}} method="POST">
+      <form
+        onSubmit={(e) => {
+          hadnleOnSubmit(e);
+          setDisable(true);
+        }}
+        method="POST"
+      >
         <div className="p-3">
           <div className="alert alert-info">My Information</div>
           <div className={`form-field mb-3 person-avatar }`}>
@@ -88,7 +100,7 @@ const Profile = () => {
               name="name"
               type="text"
               id="name"
-              className="form-control"
+              className={`form-control ${ darkMode ? `${classes.inputDark}` : ""}`}
               value={user?.name}
               onChange={(e) => {
                 setUser({ ...user, name: e.target.value });
@@ -105,7 +117,7 @@ const Profile = () => {
               name="email"
               type="email"
               id="email"
-              className="form-control"
+              className={`form-control ${darkMode ? `${classes.inputDark}` : ""}`}
               value={user?.email}
               onChange={(e) => {
                 setUser({ ...user, email: e.target.value });
@@ -122,7 +134,7 @@ const Profile = () => {
               name="password"
               type="password"
               id="password"
-              className="form-control"
+              className={`form-control ${darkMode ? `${classes.inputDark}` : ""}`}
             />
           </div>
           <div className="form-field mb-3">
@@ -133,7 +145,7 @@ const Profile = () => {
               name="new_password"
               type="password"
               id="newPassword"
-              className="form-control"
+              className={`form-control ${darkMode ? `${classes.inputDark}` : ""}`}
             />
           </div>
           <div className="form-field mb-3">
@@ -144,12 +156,16 @@ const Profile = () => {
               name="new_password_confirmation"
               type="password"
               id="passwordConfirmation"
-              className="form-control"
+              className={`form-control ${darkMode ? `${classes.inputDark}` : ""}`}
             />
           </div>
           <input type="hidden" name="_method" value="put" />
           <div className="form-field mb-3">
-            <button type="submit" disabled={disable} className="btn btn-primary">
+            <button
+              type="submit"
+              disabled={disable}
+              className="btn btn-primary"
+            >
               Update Profile
             </button>
           </div>

@@ -10,7 +10,7 @@ const Tweets = React.lazy(() => import("./components/Tweets/Tweets"))
 const Profile = React.lazy(() => import("./components/Profile/Profile"))
 
 const App = () => {
-  const { token } = useContext(AuthContext);
+  const { token ,darkMode } = useContext(AuthContext);
   const navigate = useNavigate();
   useEffect(() => {
     if (!token) navigate("/login");
@@ -19,6 +19,7 @@ const App = () => {
   }, []);
   return (
     <>
+    <div className={darkMode ? 'dark' : 'light'}>
       <Routes>
           <Route path="/" element={<Suspense fallback={<Loading/>}><Tweets /></Suspense>}/>
           <Route path="/register" element={ <Suspense fallback={<Loading/>}><Register /></Suspense>}/>
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/profile" element={<Suspense fallback={<Loading/>}><Profile /></Suspense>}/>
           <Route path="/logout" element={<Suspense fallback={<Loading/>}><Logout /></Suspense>}/>
       </Routes>
+    </div>
     </>
   );
 }

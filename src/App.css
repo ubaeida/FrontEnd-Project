@@ -2,3 +2,7 @@ body {
     font-family: 'Poppins', sans-serif !important;
     font-size: large;
 }
+.dark { 
+    background-color:#18191A;
+    color: #e8e6e3;
+}

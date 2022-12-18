@@ -8,6 +8,8 @@ const UserMagnger = ({ children }) => {
   );
   const [token, setToken] = useState(localStorage.getItem("the_token") || "");
   const [disable, setDisable] = useState(false)
+  const [darkMode , setDarkMode] = useState(false)
+
   const login = (userData, userToken) => {
     setUser(userData);
     setToken(userToken);
@@ -19,7 +21,7 @@ const UserMagnger = ({ children }) => {
     localStorage.removeItem("the_user");
   };
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, setUser ,disable, setDisable }}>
+    <AuthContext.Provider value={{ user, token, login, logout, setUser ,disable, setDisable,darkMode , setDarkMode }}>
       {children}
     </AuthContext.Provider>
   );

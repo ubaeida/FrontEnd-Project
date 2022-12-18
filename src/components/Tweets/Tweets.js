@@ -5,8 +5,11 @@ import { AuthContext } from "../../contexts/AuthContext";
 import Tweet from "./Tweet";
 import Loading from "../Loading/Loading";
 const Tweets = () => {
-  const { user, token, disable, setDisable } = useContext(AuthContext);
+  const { user, token, disable, setDisable, darkMode } =
+    useContext(AuthContext);
   const [tweets, setTweets] = useState([]);
+  const [updatedTweets, setUpdatedTweets] = useState([]);
+
   const [count, setCount] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -37,8 +40,6 @@ const Tweets = () => {
     // eslint-disable-next-line
   }, [count]);
 
-  useEffect(() => {}, [tweets]);
-
   const handleScroll = () => {
     if (
       !isFetching &&
@@ -65,9 +66,10 @@ const Tweets = () => {
 
   const addPost = async () => {
     const tweetTxt = tweetTxtRef.current.value;
-    if (tweetTxt.length < 10)
+    if (tweetTxt.length < 10) {
+      setDisable(false);
       alert("The tweet must be at least 10 characters.");
-    else {
+    } else {
       const response = await fetch(
         `${process.env.REACT_APP_API_POST_ADD_POST}`,
         {
@@ -81,27 +83,43 @@ const Tweets = () => {
       );
       const json = await response.json();
       if (json.success) {
-        tweets.unshift(json.data);
-        setTweets([...tweets]);
+        setUpdatedTweets([json.data, ...tweets]);
         tweetTxtRef.current.value = "";
       } else {
         alert(json.message);
       }
     }
-    setDisable(false)
+    setDisable(false);
   };
+  useEffect(() => {
+    setTweets([...updatedTweets]);
+  }, [updatedTweets]);
 
   return (
     <WrraperComponent title="Home">
-      <div className={classes.textBoxArea}>
+      <div
+        className={
+          darkMode
+            ? `${classes.textBoxArea} ${classes.textBoxAreaDark}`
+            : `${classes.textBoxArea} ${classes.textBoxAreaLight}`
+        }
+      >
         <img src={user.avatar} alt={user.name} />
         <div className={classes.textarea}>
           <textarea
+            className={darkMode ? `${classes.textBoxAreaDark}` : ``}
             placeholder="What is happening?"
             spellCheck="false"
             ref={tweetTxtRef}
           ></textarea>
-          <button onClick={() => {addPost(); setDisable(true)}} disabled={disable} className="btn btn-primary">
+          <button
+            onClick={() => {
+              setDisable(true);
+              addPost();
+            }}
+            disabled={disable}
+            className="btn btn-primary"
+          >
             Create Post
           </button>
         </div>
