@@ -4,15 +4,17 @@ import { useContext, useState, useEffect, useRef } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import Tweet from "./Tweet";
 import Loading from "../Loading/Loading";
+let isFetching;
+
 const Tweets = () => {
-  const { user, token, disable, setDisable, darkMode } = useContext(AuthContext);
+  const { user, token, disable, setDisable, darkMode } =
+    useContext(AuthContext);
   const [tweets, setTweets] = useState([]);
-  const [count, setCount] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [count, setCount] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const tweetTxtRef = useRef();
 
-  let isFetching = true;
   const getTweets = async () => {
     if (isFetching) {
       const respnse = await fetch(
@@ -33,7 +35,13 @@ const Tweets = () => {
   };
 
   useEffect(() => {
-    getTweets();
+    if (totalPages >= count) {
+      isFetching = true;
+      getTweets();
+    } else {
+      isFetching = false;
+      setHasMore(false);
+    }
     // eslint-disable-next-line
   }, [count]);
 
@@ -46,21 +54,20 @@ const Tweets = () => {
     ) {
       isFetching = true;
       setCount((count) => count + 1);
+      console.log("i will fetch");
     }
   };
 
   useEffect(() => {
+    console.log("add event listner");
     window.addEventListener("scroll", handleScroll);
-    if (totalPages >= count) {
-    } else {
-      setHasMore(false);
-    }
+    getTweets();
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
     // eslint-disable-next-line
-  }, [count]);
-  
+  }, []);
+
   const addPost = async () => {
     const tweetTxt = tweetTxtRef.current.value;
     if (tweetTxt.length < 10) {
@@ -88,6 +95,8 @@ const Tweets = () => {
     }
     setDisable(false);
   };
+  console.log(isFetching);
+
   return (
     <WrraperComponent title="Home">
       <div
@@ -117,6 +126,7 @@ const Tweets = () => {
           </button>
         </div>
       </div>
+
       <div className="mb-4">
         {tweets?.map((tweet, index) => (
           <Tweet
@@ -127,12 +137,12 @@ const Tweets = () => {
             index={index}
           />
         ))}
-        {isFetching && <Loading />}
         {!hasMore && (
           <div className="text-center my-4 fst-italic fw-bold text-secondary">
             The end of the posts
           </div>
         )}
+        {isFetching && <Loading />}
       </div>
     </WrraperComponent>
   );
