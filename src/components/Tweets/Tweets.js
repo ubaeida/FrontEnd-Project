@@ -142,7 +142,7 @@ const Tweets = () => {
             The end of the posts
           </div>
         )}
-        {isFetching && <Loading />}
+        {hasMore && isFetching && <Loading />}
       </div>
     </WrraperComponent>
   );
